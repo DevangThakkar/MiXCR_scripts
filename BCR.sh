@@ -2,9 +2,6 @@
 # get mates somehow and make into paired end fastq
 
 sample=$1
-
-mkdir -p $result_dir
-
 threads=$2
 
 # get index
