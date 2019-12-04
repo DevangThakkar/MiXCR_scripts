@@ -1,2 +1,2 @@
-# MiXCR_scripts
+# MiXCR scripts
 BCR/TCR clonotype calling scripts using MiXCR
