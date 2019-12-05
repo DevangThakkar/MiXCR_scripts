@@ -7,6 +7,11 @@ threads=$2
 report=$3
 output=$4
 
+echo "$sample"
+echo "$threads"
+echo "$report"
+echo "$output"
+
 # get index
 #samtools index -@ $threads "$sample".bam
 
