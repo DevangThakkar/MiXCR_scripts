@@ -4,6 +4,9 @@
 sample=$1
 threads=$2
 
+report=$3
+output=$4
+
 # get index
 #samtools index -@ $threads "$sample".bam
 
@@ -39,7 +42,7 @@ cat "$sample".unmapped.R1.fastq "$sample".IG.R1.fastq > "$sample".combined.IG.R1
 cat "$sample".unmapped.R2.fastq "$sample".IG.R2.fastq > "$sample".combined.IG.R2.fastq
 
 # mixcr align
-mixcr align -f -r "$sample".IG.report -s human -t $threads -p rna-seq -OallowPartialAlignments=true -OvParameters.geneFeatureToAlign=VGeneWithP "$sample".combined.IG.R1.fastq "$sample".combined.IG.R2.fastq "$sample".IG.vdjca
+mixcr align -f -r "$report" -s human -t $threads -p rna-seq -OallowPartialAlignments=true -OvParameters.geneFeatureToAlign=VGeneWithP "$sample".combined.IG.R1.fastq "$sample".combined.IG.R2.fastq "$sample".IG.vdjca
 
 # mixcr assemblePartial
 mixcr assemblePartial -f "$sample".IG.vdjca "$sample".IG.rescued.vdjca
@@ -49,4 +52,4 @@ mixcr assemblePartial -f "$sample".IG.rescued.vdjca "$sample".IG.rescued2.vdjca
 mixcr assemble -f "$sample".IG.rescued2.vdjca "$sample".IG.clns
 
 # mixcr exportClones
-mixcr exportClones -f -o -t "$sample".IG.clns "$sample".IG.clones.tsv
+mixcr exportClones -f -o -t "$sample".IG.clns "$output"
