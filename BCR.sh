@@ -39,7 +39,7 @@ cat "$sample".unmapped.R1.fastq "$sample".IG.R1.fastq > "$sample".combined.IG.R1
 cat "$sample".unmapped.R2.fastq "$sample".IG.R2.fastq > "$sample".combined.IG.R2.fastq
 
 # mixcr align
-mixcr align -f -r "$sample".report -s human -t $threads -p rna-seq -OallowPartialAlignments=true -OvParameters.geneFeatureToAlign=VGeneWithP "$sample".combined.IG.R1.fastq "$sample".combined.IG.R2.fastq "$sample".IG.vdjca
+mixcr align -f -r "$sample".IG.report -s human -t $threads -p rna-seq -OallowPartialAlignments=true -OvParameters.geneFeatureToAlign=VGeneWithP "$sample".combined.IG.R1.fastq "$sample".combined.IG.R2.fastq "$sample".IG.vdjca
 
 # mixcr assemblePartial
 mixcr assemblePartial -f "$sample".IG.vdjca "$sample".IG.rescued.vdjca
