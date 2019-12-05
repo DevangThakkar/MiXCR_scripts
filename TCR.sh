@@ -8,22 +8,22 @@ report=$3
 output=$4
 
 # get index
-#samtools index -@ $threads "$sample".bam
+#samtools index -@ $threads "$sample"
 
 # get unmapped reads
-samtools view -b -h -f 4 -@ $threads "$sample".bam > "$sample".unmapped.bam
+samtools view -b -h -f 4 -@ $threads "$sample" > "$sample".unmapped.bam
 
 # get TRA reads
-samtools view -b -h -@ $threads "$sample".bam "chr14:21621904-22552132" > "$sample".TRA.bam
+samtools view -b -h -@ $threads "$sample" "chr14:21621904-22552132" > "$sample".TRA.bam
 
 # get TRB reads
-samtools view -b -h -@ $threads "$sample".bam "chr7:142299011-142813287" > "$sample".TRB.bam
+samtools view -b -h -@ $threads "$sample" "chr7:142299011-142813287" > "$sample".TRB.bam
 
 # get TRG reads
-samtools view -b -h -@ $threads "$sample".bam "chr7:38240024-38368055" > "$sample".TRG.bam
+samtools view -b -h -@ $threads "$sample" "chr7:38240024-38368055" > "$sample".TRG.bam
 
 # get TRD reads
-samtools view -b -h -@ $threads "$sample".bam "chr14:22422546-22466577" > "$sample".TRD.bam
+samtools view -b -h -@ $threads "$sample" "chr14:22422546-22466577" > "$sample".TRD.bam
 
 # merge TR reads
 samtools merge -f -@ $threads "$sample".TR.bam "$sample".TRA.bam "$sample".TRB.bam "$sample".TRG.bam "$sample".TRD.bam
