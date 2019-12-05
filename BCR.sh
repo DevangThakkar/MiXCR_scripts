@@ -13,19 +13,19 @@ echo "$report"
 echo "$output"
 
 # get index
-#samtools index -@ $threads "$sample".bam
+#samtools index -@ $threads "$sample"
 
 # get unmapped reads
-samtools view -b -h -f 4 -@ $threads "$sample".bam > "$sample".unmapped.bam
+samtools view -b -h -f 4 -@ $threads "$sample" > "$sample".unmapped.bam
 
 # get IGH reads
-samtools view -b -h -@ $threads "$sample".bam "chr14:105586437-106879844" > "$sample".IGH.bam
+samtools view -b -h -@ $threads "$sample" "chr14:105586437-106879844" > "$sample".IGH.bam
 
 # get IGK reads
-samtools view -b -h -@ $threads "$sample".bam "chr2:88857361-90235368" > "$sample".IGK.bam
+samtools view -b -h -@ $threads "$sample" "chr2:88857361-90235368" > "$sample".IGK.bam
 
 # get IGL reads
-samtools view -b -h -@ $threads "$sample".bam "chr22:22026076-22922913" > "$sample".IGL.bam
+samtools view -b -h -@ $threads "$sample" "chr22:22026076-22922913" > "$sample".IGL.bam
 
 # merge IG reads
 samtools merge -f -@ $threads "$sample".IG.bam "$sample".IGH.bam "$sample".IGK.bam "$sample".IGL.bam
