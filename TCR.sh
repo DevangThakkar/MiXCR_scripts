@@ -29,10 +29,10 @@ samtools view -b -h -@ $threads "$sample" "chr14:22422546-22466577" > "$sample".
 samtools merge -f -@ $threads "$sample".TR.bam "$sample".TRA.bam "$sample".TRB.bam "$sample".TRG.bam "$sample".TRD.bam
 
 # sort TR reads
-samtools sort -@ $threads -n -o "$sample".TR.sorted.bam "$sample".TR.bam
+samtools sort -@ $threads -n "$sample".TR.bam "$sample".TR.sorted
 
 # sort unmapped reads
-samtools sort -n -o "$sample".unmapped.sorted.bam "$sample".unmapped.bam
+samtools sort -n "$sample".unmapped.bam "$sample".unmapped.sorted
 
 # get unmapped fastq
 bedtools bamtofastq -i "$sample".unmapped.sorted.bam -fq "$sample".unmapped.R1.fastq -fq2 "$sample".unmapped.R2.fastq
