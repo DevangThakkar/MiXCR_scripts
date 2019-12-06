@@ -36,11 +36,11 @@ samtools merge -f -@ $threads "$sample".IG.bam "$sample".IGH.bam "$sample".IGK.b
 echo "merge done"
 
 # sort IG reads
-samtools sort -@ $threads -n -o "$sample".IG.sorted.bam "$sample".IG.bam
+samtools sort -@ $threads -n "$sample".IG.bam "$sample".IG.sorted
 echo "sort done"
 
 # sort unmapped reads
-samtools sort -@ $threads -n -o "$sample".unmapped.sorted.bam "$sample".unmapped.bam
+samtools sort -@ $threads -n "$sample".unmapped.bam "$sample".unmapped.sorted
 
 # get unmapped fastq
 bedtools bamtofastq -i "$sample".unmapped.sorted.bam -fq "$sample".unmapped.R1.fastq -fq2 "$sample".unmapped.R2.fastq
