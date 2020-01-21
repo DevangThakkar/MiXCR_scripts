@@ -18,7 +18,9 @@ RUN apt-get update -y && apt-get install -y \
     build-essential \
     openjdk-8-jre \
     wget \
-    unzip
+    unzip \
+    samtools \
+    bedtools
 
 ################################################################################
 ##################### Install MIXCR    #########################################
@@ -32,11 +34,17 @@ RUN wget https://github.com/milaboratory/mixcr/releases/download/v${version}/mix
 # unzip the source
 RUN unzip mixcr-${version}.zip
 
+################################################################################
+##################### download clonotype calling scripts #######################
+
+ADD https://api.github.com/repos/DevangThakkar/MiXCR_scripts/git/refs/heads/ version.json
+RUN git clone https://github.com/DevangThakkar/MiXCR_scripts.git
+
 # download BCR script
-RUN wget https://raw.githubusercontent.com/DevangThakkar/MiXCR_scripts/master/BCR.sh
+RUN mv MiXCR_scripts/BCR.sh .
 
 # download TCR script
-RUN wget https://raw.githubusercontent.com/DevangThakkar/MiXCR_scripts/master/TCR.sh
+RUN mv MiXCR_scripts/TCR.sh .
 
 ################################################################################
 ###################### set environment path    #################################
