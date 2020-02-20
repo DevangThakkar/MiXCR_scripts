@@ -73,3 +73,4 @@ grep -m 1 "IGK" "$sample".IG.clones.tsv.filter1 > "$sample".IG.clones.tsv.IGK
 grep -m 1 "IGL" "$sample".IG.clones.tsv.filter1 > "$sample".IG.clones.tsv.IGL
 cat "$sample".IG.clones.tsv.head1 "$sample".IG.clones.tsv.IGH "$sample".IG.clones.tsv.IGK "$sample".IG.clones.tsv.IGL > "$sample".IG.clones.tsv.filter2
 cut -f 2,3,4,6,7,8,9 "$sample".IG.clones.tsv.filter2 > "$sample".IG.clones.tsv
+sed -i 's/[(][^)]*[)]//g' "$sample".IG.clones.tsv

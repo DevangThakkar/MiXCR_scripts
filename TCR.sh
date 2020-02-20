@@ -66,3 +66,4 @@ grep -m 1 "TRG" "$sample".T.clones.tsv.filter1 > "$sample".T.clones.tsv.TRG
 grep -m 1 "TRD" "$sample".T.clones.tsv.filter1 > "$sample".T.clones.tsv.TRD
 cat "$sample".T.clones.tsv.head1 "$sample".T.clones.tsv.TRA "$sample".T.clones.tsv.TRB "$sample".T.clones.tsv.TRG "$sample".T.clones.tsv.TRD > "$sample".T.clones.tsv.filter2
 cut -f 2,3,4,6,7,8,9 "$sample".T.clones.tsv.filter2 > "$sample".T.clones.tsv
+sed -i 's/[(][^)]*[)]//g' "$sample".T.clones.tsv
