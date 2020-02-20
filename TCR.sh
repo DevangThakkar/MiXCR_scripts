@@ -55,7 +55,7 @@ mixcr assemblePartial -f "$sample".T.rescued.vdjca "$sample".T.rescued2.vdjca
 mixcr assemble -f "$sample".T.rescued2.vdjca "$sample".T.clns
 
 # mixcr exportClones
-mixcr exportClones -f -o -t "$sample".T.clns "$output"
+mixcr exportClones -f -o -t "$sample".T.clns "$sample".T.clones.tsv
 
 # parse output
 cat "$sample".T.clones.tsv | grep -v 'IGH' | grep -v 'IGK' | grep -v 'IGL' > "$sample".T.clones.tsv.filter1
@@ -65,5 +65,5 @@ grep -m 1 "TRB" "$sample".T.clones.tsv.filter1 > "$sample".T.clones.tsv.TRB
 grep -m 1 "TRG" "$sample".T.clones.tsv.filter1 > "$sample".T.clones.tsv.TRG
 grep -m 1 "TRD" "$sample".T.clones.tsv.filter1 > "$sample".T.clones.tsv.TRD
 cat "$sample".T.clones.tsv.head1 "$sample".T.clones.tsv.TRA "$sample".T.clones.tsv.TRB "$sample".T.clones.tsv.TRG "$sample".T.clones.tsv.TRD > "$sample".T.clones.tsv.filter2
-cut -f 2,3,4,6,7,8,9 "$sample".T.clones.tsv.filter2 > "$sample".T.clones.tsv
-sed -i 's/[(][^)]*[)]//g' "$sample".T.clones.tsv
+cut -f 2,3,4,6,7,8,9 "$sample".T.clones.tsv.filter2 > "$sample".T.clones.tsv.filter3
+sed 's/[(][^)]*[)]//g' "$sample".T.clones.tsv.filter3 > "$output"
