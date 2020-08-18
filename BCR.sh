@@ -7,13 +7,19 @@ threads=$2
 report=$3
 output=$4
 
-echo "$sample"
-echo "$threads"
-echo "$report"
-echo "$output"
+echo "ARGUMENTS"
+echo "sample:" "$sample"
+echo "threads:" "$threads"
+echo "report:" "$report"
+echo "output:" "$output"
+echo "========="
+echo
 
 # get index
-#samtools index -@ $threads "$sample"
+echo "indexing started"
+samtools index -@ $threads "$sample"
+sleep 5
+echo "indexing done"
 
 # get unmapped reads
 echo "unmapped started"
