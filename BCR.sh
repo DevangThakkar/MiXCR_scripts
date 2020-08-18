@@ -16,28 +16,42 @@ echo "$output"
 #samtools index -@ $threads "$sample"
 
 # get unmapped reads
-samtools view -b -h -f 4 -@ $threads "$sample" > "$sample".unmapped.bam
+echo "unmapped started"
+time samtools view -b -h -f 4 -@ $threads "$sample" > "$sample".unmapped.bam
+sleep 5
 echo "unmapped done"
 
 # get IGH reads
-samtools view -b -h -@ $threads "$sample" "chr14:105586437-106879844" > "$sample".IGH.bam
+echo "IGH started"
+time samtools view -b -h -@ $threads "$sample" "chr14:105586437-106879844" > "$sample".IGH.bam
+sleep 5
 echo "IGH done"
 
 # get IGK reads
-samtools view -b -h -@ $threads "$sample" "chr2:88857361-90235368" > "$sample".IGK.bam
+echo " IGK started"
+time samtools view -b -h -@ $threads "$sample" "chr2:88857361-90235368" > "$sample".IGK.bam
+sleep 5
 echo "IGK done"
 
 # get IGL reads
-samtools view -b -h -@ $threads "$sample" "chr22:22026076-22922913" > "$sample".IGL.bam
+echo "IGL started"
+time samtools view -b -h -@ $threads "$sample" "chr22:22026076-22922913" > "$sample".IGL.bam
+sleep 5
 echo "IGL done"
 
 # merge IG reads
-samtools merge -f -@ $threads "$sample".IG.bam "$sample".IGH.bam "$sample".IGK.bam "$sample".IGL.bam
+echo "merge started"
+time samtools merge -f -@ $threads "$sample".IG.bam "$sample".IGH.bam "$sample".IGK.bam "$sample".IGL.bam
+sleep 5
 echo "merge done"
 
 # sort IG reads
-samtools sort -@ $threads -n "$sample".IG.bam "$sample".IG.sorted
+echo "sort started"
+time samtools sort -@ $threads -n "$sample".IG.bam "$sample".IG.sorted
+sleep 5
 echo "sort done"
+
+echo "more processing started"
 
 # sort unmapped reads
 samtools sort -@ $threads -n "$sample".unmapped.bam "$sample".unmapped.sorted
@@ -52,6 +66,11 @@ bedtools bamtofastq -i "$sample".IG.sorted.bam -fq "$sample".IG.R1.fastq -fq2 "$
 cat "$sample".unmapped.R1.fastq "$sample".IG.R1.fastq > "$sample".combined.IG.R1.fastq
 cat "$sample".unmapped.R2.fastq "$sample".IG.R2.fastq > "$sample".combined.IG.R2.fastq
 
+sleep 5
+echo "more processing done"
+
+echo "mixcr started"
+
 # mixcr align
 mixcr align -f -r "$report" -s human -t $threads -p rna-seq -OallowPartialAlignments=true -OvParameters.geneFeatureToAlign=VGeneWithP "$sample".combined.IG.R1.fastq "$sample".combined.IG.R2.fastq "$sample".IG.vdjca
 
@@ -65,6 +84,11 @@ mixcr assemble -f "$sample".IG.rescued2.vdjca "$sample".IG.clns
 # mixcr exportClones
 mixcr exportClones -f -o -t "$sample".IG.clns "$sample".IG.clones.tsv
 
+sleep 5
+echo "mixcr done"
+
+echo "parse output started"
+
 # parse output
 cat "$sample".IG.clones.tsv | grep -v 'TRA' | grep -v 'TRB' | grep -v 'TRG' | grep -v 'TRD' > "$sample".IG.clones.tsv.filter1
 head -1 "$sample".IG.clones.tsv.filter1 > "$sample".IG.clones.tsv.head1
@@ -74,3 +98,6 @@ grep -m 1 "IGL" "$sample".IG.clones.tsv.filter1 > "$sample".IG.clones.tsv.IGL
 cat "$sample".IG.clones.tsv.head1 "$sample".IG.clones.tsv.IGH "$sample".IG.clones.tsv.IGK "$sample".IG.clones.tsv.IGL > "$sample".IG.clones.tsv.filter2
 cut -f 2,3,4,6,7,8,9 "$sample".IG.clones.tsv.filter2 > "$sample".IG.clones.tsv.filter3
 sed 's/[(][^)]*[)]//g' "$sample".IG.clones.tsv.filter3 > "$output"
+
+sleep 5
+echo "parse output done"
