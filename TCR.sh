@@ -35,10 +35,10 @@ samtools sort -@ $threads -n "$sample".TR.bam "$sample".TR.sorted
 samtools sort -n "$sample".unmapped.bam "$sample".unmapped.sorted
 
 # get unmapped fastq
-bedtools bamtofastq -i "$sample".unmapped.sorted.bam -fq "$sample".unmapped.R1.fastq -fq2 "$sample".unmapped.R2.fastq
+bedtools bamtofastq -i "$sample".unmapped.sorted.bam -fq "$sample".unmapped.R1.fastq -fq2 "$sample".unmapped.R2.fastq 2> tmp
 
 # get TR fastq
-bedtools bamtofastq -i "$sample".TR.sorted.bam -fq "$sample".TR.R1.fastq -fq2 "$sample".TR.R2.fastq
+bedtools bamtofastq -i "$sample".TR.sorted.bam -fq "$sample".TR.R1.fastq -fq2 "$sample".TR.R2.fastq 2> tmp
 
 # get combined fastq
 cat "$sample".unmapped.R1.fastq "$sample".TR.R1.fastq > "$sample".combined.T.R1.fastq
