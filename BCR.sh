@@ -16,10 +16,10 @@ echo "========="
 echo
 
 # get index
-echo "indexing started"
-samtools index -@ $threads "$sample"
-sleep 5
-echo "indexing done"
+# echo "indexing started"
+# samtools index -@ $threads "$sample"
+# sleep 5
+# echo "indexing done"
 
 # get unmapped reads
 echo "unmapped started"
@@ -88,7 +88,8 @@ mixcr assemblePartial -f "$sample".IG.rescued.vdjca "$sample".IG.rescued2.vdjca
 mixcr assemble -f "$sample".IG.rescued2.vdjca "$sample".IG.clns
 
 # mixcr exportClones
-mixcr exportClones -f -o -t "$sample".IG.clns "$sample".IG.clones.tsv
+mixcr exportClones -count -vGene -dHit -jHit -vAlignment -dAlignment -jAlignment -aaFeature CDR3 "$sample".IG.clns "$sample".IG.clones.tsv
+# mixcr exportClones -f -o -t "$sample".IG.clns "$sample".IG.clones.tsv
 
 sleep 5
 echo "mixcr done"
@@ -101,9 +102,10 @@ head -1 "$sample".IG.clones.tsv.filter1 > "$sample".IG.clones.tsv.head1
 grep -m 1 "IGH" "$sample".IG.clones.tsv.filter1 > "$sample".IG.clones.tsv.IGH
 grep -m 1 "IGK" "$sample".IG.clones.tsv.filter1 > "$sample".IG.clones.tsv.IGK
 grep -m 1 "IGL" "$sample".IG.clones.tsv.filter1 > "$sample".IG.clones.tsv.IGL
-cat "$sample".IG.clones.tsv.head1 "$sample".IG.clones.tsv.IGH "$sample".IG.clones.tsv.IGK "$sample".IG.clones.tsv.IGL > "$sample".IG.clones.tsv.filter2
-cut -f 2,3,4,6,7,8,9 "$sample".IG.clones.tsv.filter2 > "$sample".IG.clones.tsv.filter3
-sed 's/[(][^)]*[)]//g' "$sample".IG.clones.tsv.filter3 > "$output"
+cat "$sample".IG.clones.tsv.head1 "$sample".IG.clones.tsv.IGH "$sample".IG.clones.tsv.IGK "$sample".IG.clones.tsv.IGL > "$output"
+# "$sample".IG.clones.tsv.filter2
+# cut -f 2,3,4,6,7,8,9 "$sample".IG.clones.tsv.filter2 > "$sample".IG.clones.tsv.filter3
+# sed 's/[(][^)]*[)]//g' "$sample".IG.clones.tsv.filter3 > "$output"
 
 sleep 5
 echo "parse output done"
