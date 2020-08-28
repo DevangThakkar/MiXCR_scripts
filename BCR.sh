@@ -77,18 +77,22 @@ echo "more processing done"
 
 echo "mixcr started"
 
+echo "mixcr align"
 # mixcr align
 mixcr align -f -r "$report" -s human -t $threads -p rna-seq -OallowPartialAlignments=true -OvParameters.geneFeatureToAlign=VGeneWithP "$sample".combined.IG.R1.fastq "$sample".combined.IG.R2.fastq "$sample".IG.vdjca
 
+echo "mixcr assemblePartial"
 # mixcr assemblePartial
 mixcr assemblePartial -f "$sample".IG.vdjca "$sample".IG.rescued.vdjca
 mixcr assemblePartial -f "$sample".IG.rescued.vdjca "$sample".IG.rescued2.vdjca
 
+echo "mixcr assemble"
 # mixcr assemble
 mixcr assemble -f "$sample".IG.rescued2.vdjca "$sample".IG.clns
 
+echo "mixcr exportClones"
 # mixcr exportClones
-mixcr exportClones -count -vGene -dGene -jGene -vAlignment -dAlignment -jAlignment -aaFeature CDR3 "$sample".IG.clns "$sample".IG.clones.tsv
+mixcr exportClones -count -fraction -vGene -dGene -jGene -vAlignment -dAlignment -jAlignment -aaFeature CDR3 "$sample".IG.clns "$sample".IG.clones.tsv
 # mixcr exportClones -f -o -t "$sample".IG.clns "$sample".IG.clones.tsv
 
 sleep 5
