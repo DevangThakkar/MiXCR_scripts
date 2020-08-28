@@ -88,7 +88,7 @@ mixcr assemblePartial -f "$sample".IG.rescued.vdjca "$sample".IG.rescued2.vdjca
 mixcr assemble -f "$sample".IG.rescued2.vdjca "$sample".IG.clns
 
 # mixcr exportClones
-mixcr exportClones -count -cloneFraction -targetSequences -vGene -dGene -jGene -vAlignment -dAlignment -jAlignment -aaFeature CDR3 "$sample".IG.clns "$sample".IG.clones.tsv
+mixcr exportClones -count -fraction -targetSequences -vGene -dGene -jGene -vAlignment -dAlignment -jAlignment -aaFeature CDR3 "$sample".IG.clns "$sample".IG.clones.tsv
 # mixcr exportClones -f -o -t "$sample".IG.clns "$sample".IG.clones.tsv
 
 sleep 5
