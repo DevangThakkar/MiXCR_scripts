@@ -5,7 +5,17 @@ sample=$1
 threads=$2
 
 report=$3
-output=$4
+top_output=$4
+all_output=$5
+
+echo "ARGUMENTS"
+echo "sample:" "$sample"
+echo "threads:" "$threads"
+echo "report:" "$report"
+echo "top_output:" "$top_output"
+echo "all_output:" "$all_output"
+echo "========="
+echo
 
 # get index
 #samtools index -@ $threads "$sample"
@@ -55,15 +65,16 @@ mixcr assemblePartial -f "$sample".T.rescued.vdjca "$sample".T.rescued2.vdjca
 mixcr assemble -f "$sample".T.rescued2.vdjca "$sample".T.clns
 
 # mixcr exportClones
-mixcr exportClones -f -o -t "$sample".T.clns "$sample".T.clones.tsv
+mixcr exportClones -count -fraction -vGene -dGene -jGene -vAlignment -dAlignment -jAlignment -aaFeature CDR3 "$sample".T.clns "$sample".T.clones.tsv
+# mixcr exportClones -f -o -t "$sample".T.clns "$sample".T.clones.tsv
 
 # parse output
-cat "$sample".T.clones.tsv | grep -v 'IGH' | grep -v 'IGK' | grep -v 'IGL' > "$sample".T.clones.tsv.filter1
-head -1 "$sample".T.clones.tsv.filter1 > "$sample".T.clones.tsv.head1
-grep -m 1 "TRA" "$sample".T.clones.tsv.filter1 > "$sample".T.clones.tsv.TRA
-grep -m 1 "TRB" "$sample".T.clones.tsv.filter1 > "$sample".T.clones.tsv.TRB
-grep -m 1 "TRG" "$sample".T.clones.tsv.filter1 > "$sample".T.clones.tsv.TRG
-grep -m 1 "TRD" "$sample".T.clones.tsv.filter1 > "$sample".T.clones.tsv.TRD
-cat "$sample".T.clones.tsv.head1 "$sample".T.clones.tsv.TRA "$sample".T.clones.tsv.TRB "$sample".T.clones.tsv.TRG "$sample".T.clones.tsv.TRD > "$sample".T.clones.tsv.filter2
-cut -f 2,3,4,6,7,8,9 "$sample".T.clones.tsv.filter2 > "$sample".T.clones.tsv.filter3
-sed 's/[(][^)]*[)]//g' "$sample".T.clones.tsv.filter3 > "$output"
+cat "$sample".T.clones.tsv | grep -v 'IGH' | grep -v 'IGK' | grep -v 'IGL' > "$all_output"
+head -1 "$all_output" > "$sample".T.clones.tsv.head1
+grep -m 1 "TRA" "$all_output" > "$sample".T.clones.tsv.TRA
+grep -m 1 "TRB" "$all_output" > "$sample".T.clones.tsv.TRB
+grep -m 1 "TRG" "$all_output" > "$sample".T.clones.tsv.TRG
+grep -m 1 "TRD" "$all_output" > "$sample".T.clones.tsv.TRD
+cat "$sample".T.clones.tsv.head1 "$sample".T.clones.tsv.TRA "$sample".T.clones.tsv.TRB "$sample".T.clones.tsv.TRG "$sample".T.clones.tsv.TRD > "$top_output"
+# cut -f 2,3,4,6,7,8,9 "$sample".T.clones.tsv.filter2 > "$sample".T.clones.tsv.filter3
+# sed 's/[(][^)]*[)]//g' "$sample".T.clones.tsv.filter3 > "$output"

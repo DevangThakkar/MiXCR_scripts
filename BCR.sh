@@ -5,13 +5,15 @@ sample=$1
 threads=$2
 
 report=$3
-output=$4
+top_output=$4
+all_output=$5
 
 echo "ARGUMENTS"
 echo "sample:" "$sample"
 echo "threads:" "$threads"
 echo "report:" "$report"
-echo "output:" "$output"
+echo "top_output:" "$top_output"
+echo "all_output:" "$all_output"
 echo "========="
 echo
 
@@ -101,13 +103,12 @@ echo "mixcr done"
 echo "parse output started"
 
 # parse output
-cat "$sample".IG.clones.tsv | grep -v 'TRA' | grep -v 'TRB' | grep -v 'TRG' | grep -v 'TRD' > "$sample".IG.clones.tsv.filter1
-head -1 "$sample".IG.clones.tsv.filter1 > "$sample".IG.clones.tsv.head1
-grep -m 1 "IGH" "$sample".IG.clones.tsv.filter1 > "$sample".IG.clones.tsv.IGH
-grep -m 1 "IGK" "$sample".IG.clones.tsv.filter1 > "$sample".IG.clones.tsv.IGK
-grep -m 1 "IGL" "$sample".IG.clones.tsv.filter1 > "$sample".IG.clones.tsv.IGL
-cat "$sample".IG.clones.tsv.head1 "$sample".IG.clones.tsv.IGH "$sample".IG.clones.tsv.IGK "$sample".IG.clones.tsv.IGL > "$output"
-# "$sample".IG.clones.tsv.filter2
+cat "$sample".IG.clones.tsv | grep -v 'TRA' | grep -v 'TRB' | grep -v 'TRG' | grep -v 'TRD' > "$all_output"
+head -1 "$all_output" > "$sample".IG.clones.tsv.head1
+grep -m 1 "IGH" "$all_output" > "$sample".IG.clones.tsv.IGH
+grep -m 1 "IGK" "$all_output" > "$sample".IG.clones.tsv.IGK
+grep -m 1 "IGL" "$all_output" > "$sample".IG.clones.tsv.IGL
+cat "$sample".IG.clones.tsv.head1 "$sample".IG.clones.tsv.IGH "$sample".IG.clones.tsv.IGK "$sample".IG.clones.tsv.IGL > "$top_output"
 # cut -f 2,3,4,6,7,8,9 "$sample".IG.clones.tsv.filter2 > "$sample".IG.clones.tsv.filter3
 # sed 's/[(][^)]*[)]//g' "$sample".IG.clones.tsv.filter3 > "$output"
 
