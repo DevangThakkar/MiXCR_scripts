@@ -7,6 +7,7 @@ threads=$2
 report=$3
 top_output=$4
 all_output=$5
+id=$6
 
 echo "ARGUMENTS"
 echo "sample:" "$sample"
@@ -14,6 +15,7 @@ echo "threads:" "$threads"
 echo "report:" "$report"
 echo "top_output:" "$top_output"
 echo "all_output:" "$all_output"
+echo "sample id:" "$id"
 echo "========="
 echo
 
@@ -70,7 +72,27 @@ mixcr exportClones -count -fraction -vGene -dGene -jGene -vAlignment -dAlignment
 
 # parse output
 cat "$sample".T.clones.tsv | grep -v 'IGH' | grep -v 'IGK' | grep -v 'IGL' > "$all_output"
+# get header
 head -1 "$all_output" > "$sample".T.clones.tsv.head1
+# add sample info header
+sed -i -e "s/^/sample	/" "$sample".T.clones.tsv.head1
+# get top tra line
+grep -m 1 "TRA" "$all_output" > "$sample".T.clones.tsv.TRA
+# add sample info
+sed -i -e "s/^/$id	/" "$sample".T.clones.tsv.TRA
+# get top trb line 
+grep -m 1 "TRB" "$all_output" > "$sample".T.clones.tsv.TRB
+# add sample info
+sed -i -e "s/^/$id	/" "$sample".T.clones.tsv.TRB
+# get top trg line
+grep -m 1 "TRG" "$all_output" > "$sample".T.clones.tsv.TRG
+# add sample info
+sed -i -e "s/^/$id	/" "$sample".T.clones.tsv.TRG
+# get top trd line
+grep -m 1 "TRD" "$all_output" > "$sample".T.clones.tsv.TRD
+# add sample info
+sed -i -e "s/^/$id	/" "$sample".T.clones.tsv.TRD
+# cat all files together
 grep -m 1 "TRA" "$all_output" > "$sample".T.clones.tsv.TRA
 grep -m 1 "TRB" "$all_output" > "$sample".T.clones.tsv.TRB
 grep -m 1 "TRG" "$all_output" > "$sample".T.clones.tsv.TRG

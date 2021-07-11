@@ -37,14 +37,14 @@ RUN unzip mixcr-${version}.zip
 ################################################################################
 ##################### download clonotype calling scripts #######################
 
-ADD https://api.github.com/repos/DevangThakkar/MiXCR_scripts/git/refs/heads/ version.json
-RUN git clone https://github.com/DevangThakkar/MiXCR_scripts.git
+ADD https://api.github.com/repos/DevangThakkar/dockerized_scripts/git/refs/heads/ version.json
+RUN git clone https://github.com/DevangThakkar/dockerized_scripts.git
 
 # download BCR script
-RUN mv MiXCR_scripts/BCR.sh .
+RUN mv dockerized_scripts/clonotype/BCR.sh .
 
 # download TCR script
-RUN mv MiXCR_scripts/TCR.sh .
+RUN mv dockerized_scripts/clonotype/TCR.sh .
 
 ################################################################################
 ###################### set environment path    #################################
